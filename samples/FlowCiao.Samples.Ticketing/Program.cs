@@ -7,16 +7,24 @@ using FlowCiao.Samples.Ticketing.Flow.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add FlowCiao to services
-builder.Services.AddFlowCiao(settings =>
+try
 {
-    /*  Use Persist() if you want to persist the states of your Flows to your desired database 
-        or ignore it and use InMemory caching as long as the application is alive */
-    settings
-        .Persist(persistenceSettings =>
-        {
-            persistenceSettings.UseSqlServer(builder.Configuration.GetConnectionString("FlowCiao"));
-        });
-});
+	builder.Services.AddFlowCiao(settings =>
+	{
+		/*  Use Persist() if you want to persist the states of your Flows to your desired database 
+			or ignore it and use InMemory caching as long as the application is alive */
+		settings
+			.Persist(persistenceSettings =>
+			{
+				persistenceSettings.UseSqlServer(builder.Configuration.GetConnectionString("FlowCiao"));
+			});
+	});
+
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+}
 
 var app = builder.Build();
 

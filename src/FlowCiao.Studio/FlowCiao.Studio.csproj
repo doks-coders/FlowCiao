@@ -14,11 +14,20 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.28">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Persistence\Providers\Rdbms\SqlServer\Migrations\" />
     <Folder Include="wwwroot\designer\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FlowCiao\FlowCiao.csproj" />
   </ItemGroup>
 
 </Project>
