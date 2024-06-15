@@ -14,13 +14,29 @@ var builder = WebApplication.CreateBuilder(args);
 	builder.Services.AddEndpointsApiExplorer();
 	builder.Services.AddSwaggerGen();
 
+
+
 	var server = builder.Configuration.GetConnectionString("FlowCiao");
 
 	//Testing the FlowCiaoDbContext
 	//It is not connecting
 	//but this works -> builder.Services.AddDbContext<TestDbContext>(u => u.UseSqlServer(server));
 	builder.Services.AddDbContext<FlowCiaoDbContext>(u => u.UseSqlServer(server));
-	
+
+
+	/* if the above is successful then this block should work.
+	 * 
+	 * builder.Services.AddFlowCiao(settings =>
+		{
+		   //Use Persist() if you want to persist the states of your Flows to your desired database
+		   //or ignore it and use InMemory caching as long as the application is alive
+			
+			settings.Persist(persistenceSettings =>
+			{
+				persistenceSettings.UseSqlServer(builder.Configuration.GetConnectionString("FlowCiao"));
+			});
+		});
+	*/
 	builder.Services.AddCors(options =>
 	{
 		options.AddPolicy("DevelopmentCorsPolicy",
