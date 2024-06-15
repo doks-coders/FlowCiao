@@ -3,7 +3,6 @@ using Asp.Versioning;
 using FlowCiao;
 using FlowCiao.Persistence.Providers.Rdbms;
 using FlowCiao.Persistence.Providers.Rdbms.SqlServer;
-using FlowCiao.Studio.Data;
 using FlowCiao.Studio.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +15,11 @@ var builder = WebApplication.CreateBuilder(args);
 	builder.Services.AddSwaggerGen();
 
 	var server = builder.Configuration.GetConnectionString("FlowCiao");
-	builder.Services.AddDbContext<DataContext>(u => u.UseSqlServer(server));
+
+	//Testing the FlowCiaoDbContext
+	//It is not connecting
+	//but this works -> builder.Services.AddDbContext<TestDbContext>(u => u.UseSqlServer(server));
+	builder.Services.AddDbContext<FlowCiaoDbContext>(u => u.UseSqlServer(server));
 	
 	builder.Services.AddCors(options =>
 	{
@@ -67,13 +70,16 @@ app.MapControllers();
 
 app.Run();
 
-public class AppContext : DbContext
+
+//This is used for testing the db context to check if my connection string works properly
+
+public class TestDbContext : DbContext
 {
-	public AppContext(DbContextOptions<AppContext> options) : base(options) { }
-	public DbSet<Items> items { get; set; }
+	public TestDbContext(DbContextOptions<TestDbContext> options) : base(options) { }
+	public DbSet<TestItems> items { get; set; }
 }
 
-public class Items
+public class TestItems
 {
 	public int Id { get; set; }
 	public string Name { get; set; }

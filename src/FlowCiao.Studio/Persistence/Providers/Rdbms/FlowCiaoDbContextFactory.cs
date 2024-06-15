@@ -1,19 +1,19 @@
-using FlowCiao.Studio.Data;
+using FlowCiao.Persistence.Providers.Rdbms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace FlowCiao.Studio.Persistence.Providers.Rdbms;
 
-internal class FlowCiaoDbContextFactory : IDesignTimeDbContextFactory<DataContext>
+internal class FlowCiaoDbContextFactory : IDesignTimeDbContextFactory<FlowCiaoDbContext>
 {
-    public DataContext CreateDbContext(string[] args)
+    public FlowCiaoDbContext CreateDbContext(string[] args)
     {
-        DbContextOptionsBuilder<DataContext> dbContextOptionsBuilder = new();
+        DbContextOptionsBuilder<FlowCiaoDbContext> dbContextOptionsBuilder = new();
         dbContextOptionsBuilder.UseSqlServer(
             "Password=Abc1234;TrustServerCertificate=True;Persist Security Info=True;User ID=sa;Initial Catalog=FlowCiao;Data Source=.");
         dbContextOptionsBuilder.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
 
-        return new DataContext(dbContextOptionsBuilder.Options);
+        return new FlowCiaoDbContext(dbContextOptionsBuilder.Options);
     }
 }
